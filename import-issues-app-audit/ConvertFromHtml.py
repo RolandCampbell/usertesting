@@ -47,8 +47,13 @@ class ImportFile:
 
                 print('i=' + str(i)) 
                 thead = table.select_one('thead th')
+                successCriteria = thead.text
                 comment_body = table.select_one('.comment-body')
-                print(f"{thead.text}: {comment_body.text}")
+                comment = comment_body.text
+                comment = comment.replace('\n',' ')
+                print(successCriteria + ' ' + comment)
+                writeFile.write('bug,'+ successCriteria +  ',1,'+ comment +'\n')
+
 
 
 
