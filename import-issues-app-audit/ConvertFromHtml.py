@@ -22,6 +22,7 @@ class ImportFile:
         print("convert file")
         link = open(self.fileName)
         writeFile = open(".\\fixedfile.csv", "w")
+
         soup = BeautifulSoup(link.read(),features="html.parser")    
         soup.prettify
         print(soup.title)
@@ -34,15 +35,21 @@ class ImportFile:
         print("not first time")
           
 
-        for table in soup.find_all('table', {'class': 'comments-table'}):
-            print(table)  
-            print(table.find('th').text) 
-                
+        
+        
 
-            p = table.find('p', {'class': 'comment-body'}).text
-            print(p)
+        tables = soup.select('.table.comments-table')
+        
+        for i, table in enumerate(tables):
+            if  i == 0:
+                print ("skip")
+            else:
 
-            
+                print('i=' + str(i)) 
+                thead = table.select_one('thead th')
+                comment_body = table.select_one('.comment-body')
+                print(f"{thead.text}: {comment_body.text}")
+
 
 
        
